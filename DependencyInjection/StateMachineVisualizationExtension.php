@@ -23,6 +23,8 @@ class StateMachineVisualizationExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('state_machine_visualization.dot', $config['dot']);
+        $container->setParameter('state_machine_visualization.layout', $config['layout']);
+        $container->setParameter('state_machine_visualization.node_shape', $config['node_shape']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

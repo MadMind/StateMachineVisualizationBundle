@@ -32,6 +32,8 @@ public function registerBundles()
 ...
 state_machine_visualization:
     dot: /usr/local/bin/dot
+    layout: TB # Direction of graph layout. Possible values: LR - from left to right (default), TB - from top to bottom.
+    node_shape: circle # Default. Other possible values can be found here: http://www.graphviz.org/doc/info/shapes.html
 ```
 
 ### Configure routing

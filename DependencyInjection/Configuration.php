@@ -17,9 +17,9 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-            ->scalarNode('dot')
-            ->defaultTrue('/usr/bin/dot')
-            ->end()
+            ->scalarNode('dot')->defaultValue('/usr/bin/dot')->end()
+            ->scalarNode('layout')->defaultValue('LR')->end()
+            ->scalarNode('node_shape')->defaultValue('circle')->end()
             ->end();
 
         return $treeBuilder;
