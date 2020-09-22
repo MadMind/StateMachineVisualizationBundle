@@ -2,7 +2,13 @@
     "name": "madmind/state-machine-visualization-bundle",
     "type": "symfony-bundle",
     "description": "Visualization bundle for winzou/state-machine-bundle",
-    "keywords": ["symfony", "bundle", "statemachine", "visualization", "graph"],
+    "keywords": [
+        "symfony",
+        "bundle",
+        "statemachine",
+        "visualization",
+        "graph"
+    ],
     "license": "MIT",
     "authors": [
         {
@@ -10,13 +16,17 @@
             "email": "alex.madmind@gmail.com"
         }
     ],
-
     "require": {
         "php": ">5.3.0",
-        "winzou/state-machine-bundle": "~0.2"
+        "winzou/state-machine-bundle": "~0.2",
+        "symfony/config": "^3 || ^4 || ^5",
+        "symfony/console": "^3 || ^4 || ^5",
+        "symfony/dependency-injection": "^3 || ^4 || ^5",
+        "symfony/http-kernel": "^3 || ^4 || ^5"
     },
-
     "autoload": {
-        "psr-4": { "MadMind\\StateMachineVisualizationBundle\\": "" }
+        "psr-4": {
+            "MadMind\\StateMachineVisualizationBundle\\": ""
+        }
     }
 }

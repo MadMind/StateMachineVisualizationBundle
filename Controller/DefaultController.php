@@ -5,11 +5,10 @@ namespace MadMind\StateMachineVisualizationBundle\Controller;
 use MadMind\StateMachineVisualizationBundle\Service\DotGeneratorInterface;
 use MadMind\StateMachineVisualizationBundle\Service\ImageGeneratorInterface;
 use RuntimeException;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class DefaultController extends Controller
+class DefaultController
 {
     protected $dotGenerator;
     protected $imageGenerator;

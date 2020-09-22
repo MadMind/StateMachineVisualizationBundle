@@ -22,7 +22,7 @@ class StateMachineDotGenerator implements DotGeneratorInterface
         }
         $machine = $this->stateMachines[$stateMachineName];
 
-        $hash = md5(serialize($machine));
+        $hash = md5(serialize($machine).$layout.$nodeShape);
         $dotFile = sprintf('%s/smv_%s_%s.dot', $this->cacheDir, $stateMachineName, $hash);
         if (file_exists($dotFile)) {
             return $dotFile;

@@ -19,3 +19,20 @@ services:
             - "@smv_image_generator"
             - "%state_machine_visualization.layout%"
             - "%state_machine_visualization.node_shape%"
+
+    MadMind\StateMachineVisualizationBundle\Command\ExportImageCommand:
+        tags:
+            - { name: console.command }
+        arguments:
+            - "@smv_dot_generator"
+            - "@smv_image_generator"
+            - "%state_machine_visualization.layout%"
+            - "%state_machine_visualization.node_shape%"
+
+    MadMind\StateMachineVisualizationBundle\Command\ExportDotCommand:
+        tags:
+            - { name: console.command }
+        arguments:
+            - "@smv_dot_generator"
+            - "%state_machine_visualization.layout%"
+            - "%state_machine_visualization.node_shape%"
