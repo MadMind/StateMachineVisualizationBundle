@@ -1,4 +1,21 @@
 services:
-#    state_machine_visualization.example:
-#        class: MadMind\StateMachineVisualizationBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    smv_image_generator:
+        class: MadMind\StateMachineVisualizationBundle\Service\DotImageGenerator
+        public: false
+        arguments:
+            - "%state_machine_visualization.dot%"
+            - "%kernel.cache_dir%"
+
+    smv_dot_generator:
+        class: MadMind\StateMachineVisualizationBundle\Service\StateMachineDotGenerator
+        public: false
+        arguments:
+            - "%sm.configs%"
+            - "%kernel.cache_dir%"
+
+    MadMind\StateMachineVisualizationBundle\Controller\DefaultController:
+        arguments:
+            - "@smv_dot_generator"
+            - "@smv_image_generator"
+            - "%state_machine_visualization.layout%"
+            - "%state_machine_visualization.node_shape%"
