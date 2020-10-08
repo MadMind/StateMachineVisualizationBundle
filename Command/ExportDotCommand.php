@@ -33,7 +33,8 @@ class ExportDotCommand extends Command
             ->setDescription('Export state machine visualisation dot file')
             ->addArgument('state_machine_name', InputArgument::REQUIRED, 'State machine name to export')
             ->addOption('layout', null, InputOption::VALUE_OPTIONAL, 'Dot layout')
-            ->addOption('node_shape', null, InputOption::VALUE_OPTIONAL, 'Dot node shape');
+            ->addOption('node_shape', null, InputOption::VALUE_OPTIONAL, 'Dot node shape')
+            ->addOption('output', null, InputOption::VALUE_OPTIONAL, 'Output file name', 'php://stdout');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -41,12 +42,10 @@ class ExportDotCommand extends Command
         $machineName = $input->getArgument('state_machine_name');
         $layout = strtoupper($input->getOption('layout') ?: $this->defaultLayout);
         $nodeShape = strtolower($input->getOption('node_shape') ?: $this->defaultNodeShape);
+        $output = $input->getOption('output');
 
         $dotFile = $this->dotGenerator->generate($machineName, $layout, $nodeShape);
 
-        $outputFile = sprintf('smv_%s.dot', $machineName);
-        copy($dotFile, $outputFile);
-
-        $output->writeln($outputFile.' exported');
+        copy($dotFile, $output);
     }
 }
