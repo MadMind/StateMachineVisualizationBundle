@@ -39,7 +39,7 @@ jobs:
           sh -c 'echo $$>php.pid && php -S localhost:8080 -t public' &
 
       - name: Test
-        run: curl -vvv -o http://localhost:8080/smv/my_bundle_article.dot
+        run: curl -vvv -O http://localhost:8080/smv/my_bundle_article.dot
 
       - name: Stop
         run: kill < php.pid
