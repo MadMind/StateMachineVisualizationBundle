@@ -1,0 +1,46 @@
+name: CI
+on: [ push ]
+jobs:
+  ci:
+    runs-on: ubuntu-18.04
+
+    strategy:
+      matrix:
+        php-version:
+          - 7.3
+          - 7.4
+          - 8.0
+        symfony-version:
+          - 4.4
+          - 5.0
+        state-machine-version:
+          - 0.2.3
+          - 0.3.1
+          - 0.4.2
+          - 0.5.1
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          coverage: none
+        env:
+          fail-fast: true
+
+      - name: Setup test app
+        run: |
+          composer create-project symfony/skeleton=${{ matrix.symfony-version }} test-app
+          cp tests/*_config.yml test-app/config/packages
+          cp tests/bundle_routes.yml test-app/config/routes
+          cd test-app
+          composer require winzou/state-machine-bundle:${{ matrix.state-machine-version }} madmind/state-machine-visualization-bundle@dev-${{ github.sha }}
+          sh -c 'echo $$>php.pid && php -S localhost:8080 -t public' &
+
+      - name: Test
+        run: curl -vvv -o http://localhost:8080/smv/my_bundle_article.png
+
+      - name: Stop
+        run: kill < php.pid
