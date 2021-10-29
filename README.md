@@ -45,7 +45,6 @@ state_machine_visualization:
     prefix:   /smv
 ```
 
-
 #### Usage
 See graph of demo state machine (https://github.com/winzou/StateMachineBundle#configure-a-state-machine-graph)
 
