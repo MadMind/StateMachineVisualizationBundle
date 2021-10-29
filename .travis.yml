@@ -1,0 +1,31 @@
+language: php
+
+php:
+  - 7.3
+  - 7.4
+  - 8.0
+
+env:
+  - SYMFONY_VERSION=4.4 SM_BUNDLE_VERSION=0.2.3
+  - SYMFONY_VERSION=4.4 SM_BUNDLE_VERSION=0.3.1
+  - SYMFONY_VERSION=4.4 SM_BUNDLE_VERSION=0.4.2
+  - SYMFONY_VERSION=4.4 SM_BUNDLE_VERSION=0.5.1
+  - SYMFONY_VERSION=5.0 SM_BUNDLE_VERSION=0.2.3
+  - SYMFONY_VERSION=5.0 SM_BUNDLE_VERSION=0.3.1
+  - SYMFONY_VERSION=5.0 SM_BUNDLE_VERSION=0.4.2
+  - SYMFONY_VERSION=5.0 SM_BUNDLE_VERSION=0.5.1
+
+before_script:
+  - composer self-update
+  - composer create-project symfony/skeleton=${SYMFONY_VERSION} test-app
+  - cp tests/*_config.yml test-app/config/packages
+  - cp tests/bundle_routes.yml test-app/config/routes
+  - cd test-app
+  - composer require winzou/state-machine-bundle:${SM_BUNDLE_VERSION} madmind/state-machine-visualization-bundle@dev-${TRAVIS_COMMIT}
+  - sh -c 'echo $$>php.pid && php -S localhost:8080 -t public' &
+
+script:
+  - curl -vvv -o http://localhost:8080/smv/my_bundle_article.png
+
+after_script:
+  - kill < php.pid
