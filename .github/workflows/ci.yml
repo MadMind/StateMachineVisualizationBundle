@@ -31,12 +31,13 @@ jobs:
 
       - name: Setup test app
         run: |
-          composer create-project symfony/skeleton test-app "${{ matrix.symfony-version }}"
-          cd test-app
-          composer require winzou/state-machine-bundle:"${{ matrix.state-machine-version }}" madmind/state-machine-visualization-bundle:"dev-master#${{ github.sha }}"
-          cp ../tests/*_config.yml ./config/packages
-          cp ../tests/bundle_routes.yml ./config/routes
-          sh -c 'echo $$>php.pid && php -S localhost:8080 -t public' &
-
-      - name: Test
-        run: curl -f -vvv http://localhost:8080/index.php/smv/my_bundle_article.svg
+          whereis dot
+#          composer create-project symfony/skeleton test-app "${{ matrix.symfony-version }}"
+#          cd test-app
+#          composer require winzou/state-machine-bundle:"${{ matrix.state-machine-version }}" madmind/state-machine-visualization-bundle:"dev-master#${{ github.sha }}"
+#          cp ../tests/*_config.yml ./config/packages
+#          cp ../tests/bundle_routes.yml ./config/routes
+#          sh -c 'echo $$>php.pid && php -S localhost:8080 -t public' &
+#
+#      - name: Test
+#        run: curl -f -vvv http://localhost:8080/index.php/smv/my_bundle_article.svg
