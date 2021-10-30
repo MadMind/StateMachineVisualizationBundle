@@ -39,9 +39,9 @@ jobs:
           composer require winzou/state-machine-bundle:"${{ matrix.state-machine-version }}" madmind/state-machine-visualization-bundle:"dev-master#${{ github.sha }}"
           cp ../tests/*_config.yml ./config/packages
           cp ../tests/bundle_routes.yml ./config/routes
+          php -S localhost:28080 -t public 2>&1 server.log &
 
       - name: Test
         run: |
-          php -S localhost:28080 -t test-app/public 2>&1 server.log &
           curl -f -vvv http://localhost:28080/index.php/smv/my_bundle_article.svg
-          cat server.log
+          ls test-app
