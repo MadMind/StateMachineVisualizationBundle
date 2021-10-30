@@ -43,5 +43,5 @@ jobs:
 
       - name: Test
         run: |
-          curl -f -vvv http://localhost:28080/index.php/smv/my_bundle_article.svg
+          curl -vvv http://localhost:28080/index.php/smv/my_bundle_article.svg
           ls test-app
