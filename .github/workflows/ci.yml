@@ -29,6 +29,9 @@ jobs:
         env:
           fail-fast: true
 
+      - name: Setup Graphviz
+        uses: ts-graphviz/setup-graphviz@v1
+
       - name: Setup test app
         run: |
           whereis dot
