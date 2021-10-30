@@ -8,15 +8,15 @@ jobs:
       matrix:
         php-version:
           - '7.3'
-#          - '7.4'
-#          - '8.0'
+        #          - '7.4'
+        #          - '8.0'
         symfony-version:
           - '~4.4'
-#          - '~5.0'
+        #          - '~5.0'
         state-machine-version:
           - '0.3.1'
-#          - '0.4.2'
-#          - '0.5.1'
+    #          - '0.4.2'
+    #          - '0.5.1'
 
     steps:
       - uses: actions/checkout@v2
@@ -34,13 +34,12 @@ jobs:
 
       - name: Setup test app
         run: |
-          whereis dot
-#          composer create-project symfony/skeleton test-app "${{ matrix.symfony-version }}"
-#          cd test-app
-#          composer require winzou/state-machine-bundle:"${{ matrix.state-machine-version }}" madmind/state-machine-visualization-bundle:"dev-master#${{ github.sha }}"
-#          cp ../tests/*_config.yml ./config/packages
-#          cp ../tests/bundle_routes.yml ./config/routes
-#          sh -c 'echo $$>php.pid && php -S localhost:8080 -t public' &
-#
-#      - name: Test
-#        run: curl -f -vvv http://localhost:8080/index.php/smv/my_bundle_article.svg
+          composer create-project symfony/skeleton test-app "${{ matrix.symfony-version }}"
+          cd test-app
+          composer require winzou/state-machine-bundle:"${{ matrix.state-machine-version }}" madmind/state-machine-visualization-bundle:"dev-master#${{ github.sha }}"
+          cp ../tests/*_config.yml ./config/packages
+          cp ../tests/bundle_routes.yml ./config/routes
+          sh -c 'echo $$>php.pid && php -S localhost:8080 -t public' &
+
+      - name: Test
+        run: curl -f -vvv http://localhost:8080/index.php/smv/my_bundle_article.svg
