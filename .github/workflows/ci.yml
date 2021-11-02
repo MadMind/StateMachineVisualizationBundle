@@ -56,3 +56,4 @@ jobs:
       - name: Test
         run: |
           curl -f -O http://localhost:28080/index.php/smv/my_bundle_article.svg
+          ./bin/console smv:dot my_bundle_article

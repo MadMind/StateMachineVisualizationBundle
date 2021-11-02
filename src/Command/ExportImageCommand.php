@@ -55,5 +55,7 @@ class ExportImageCommand extends Command
         copy($outputImage, $outputFile);
 
         $output->writeln($outputFile.' exported');
+
+        return 0;
     }
 }

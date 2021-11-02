@@ -47,5 +47,7 @@ class ExportDotCommand extends Command
         $dotFile = $this->dotGenerator->generate($machineName, $layout, $nodeShape);
 
         copy($dotFile, $output);
+
+        return 0;
     }
 }
