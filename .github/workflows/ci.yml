@@ -1,0 +1,61 @@
+name: CI
+on: [ push ]
+jobs:
+  ci:
+    runs-on: ubuntu-18.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version:
+          - '7.4'
+          - '8.0'
+        symfony-version:
+          - "~4.4"
+          - "~5.0"
+        state-machine-version:
+          - "0.3.1"
+          - "0.5.1"
+        exclude:
+          - symfony-version: "~5.0"
+            state-machine-version: "0.3.1"
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          coverage: none
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ matrix.symfony-version }}-${{ matrix.state-machine-version }}
+          restore-keys: ${{ runner.os }}-composer-${{ matrix.symfony-version }}-${{ matrix.state-machine-version }}
+
+      - name: Setup Graphviz
+        uses: ts-graphviz/setup-graphviz@v1
+
+      - name: Setup test app
+        run: |
+          composer create-project symfony/skeleton test-app "${{ matrix.symfony-version }}"
+          cd test-app
+          composer config repositories.test path ../
+          composer require winzou/state-machine-bundle:"${{ matrix.state-machine-version }}" madmind/state-machine-visualization-bundle:"dev-${GITHUB_REF##*/}"
+          cp ../tests/*_config.yaml ./config/packages
+          cp ../tests/bundle_routes.yaml ./config/routes
+          rm -fr var/cache/dev/
+          ./bin/console cache:clear
+          php -S localhost:28080 -t public 2>&1 > server.log &
+
+      - name: Test
+        run: |
+          curl -vvv http://localhost:28080/index.php/smv/my_bundle_article.svg
+          ./test-app/bin/console smv:dot my_bundle_article

@@ -1,0 +1,3 @@
+state_machine_visualization_image:
+    path:     /{machineName}.{format}
+    defaults: { _controller: MadMind\StateMachineVisualizationBundle\Controller\DefaultController::imageAction }

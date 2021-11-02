@@ -19,6 +19,8 @@ services:
             - "@smv_image_generator"
             - "%state_machine_visualization.layout%"
             - "%state_machine_visualization.node_shape%"
+        tags:
+            - { name: controller.service_arguments }
 
     MadMind\StateMachineVisualizationBundle\Command\ExportImageCommand:
         tags:

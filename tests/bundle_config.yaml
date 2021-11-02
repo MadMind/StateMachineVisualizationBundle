@@ -1,0 +1,4 @@
+state_machine_visualization:
+  dot: /usr/bin/dot
+  layout: TB
+  node_shape: circle

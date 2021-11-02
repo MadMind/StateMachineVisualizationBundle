@@ -1,0 +1,44 @@
+winzou_state_machine:
+  my_bundle_article:
+    class: My\Bundle\Entity\Article
+    property_path: state
+    graph: simple
+    states:
+      - new
+      - pending_review
+      - awaiting_changes
+      - accepted
+      - published
+      - rejected
+    transitions:
+      create:
+        from: [ new ]
+        to: pending_review
+      ask_for_changes:
+        from: [ pending_review, accepted ]
+        to: awaiting_changes
+      submit_changes:
+        from: [ awaiting_changes ]
+        to: pending_review
+      approve:
+        from: [ pending_review, rejected ]
+        to: accepted
+      publish:
+        from: [ accepted ]
+        to: published
+    callbacks:
+      guard:
+        guard_on_submitting:
+          on: 'submit_changes'
+          do: [ '@my.awesome.service', 'isSubmittable' ]
+          args: [ 'object' ]
+      before:
+        update_reviewer:
+          on: 'create'
+          do: [ '@my.awesome.service', 'update' ]
+          args: [ 'object' ]
+      after:
+        email_on_publish:
+          on: 'publish'
+          do: [ '@my.awesome.service', 'sendEmail' ]
+          args: [ 'object', '"Email title"' ]

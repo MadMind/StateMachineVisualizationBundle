@@ -1,0 +1,3 @@
+state_machine_visualization:
+  resource: "@StateMachineVisualizationBundle/Resources/config/routing.yml"
+  prefix:   /smv

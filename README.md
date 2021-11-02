@@ -15,6 +15,9 @@ composer require madmind/state-machine-visualization-bundle
 ```
 
 ### Register the bundle
+Symfony Flex will register the bundle automatically.
+
+For projects without Symfony Flex (usually below version 4.0)
 ```php
 // app/AppKernel.php
 public function registerBundles()
@@ -28,7 +31,7 @@ public function registerBundles()
 
 ### Customize dot location
 ```yaml
-# app/config/config.yml
+# config/packages/state_machine_visualization.yaml
 ...
 state_machine_visualization:
     dot: /usr/local/bin/dot
@@ -38,13 +41,12 @@ state_machine_visualization:
 
 ### Configure routing
 ```yaml
-# app/config/routing.yml
+# config/routes.yaml
 ...
 state_machine_visualization:
     resource: "@StateMachineVisualizationBundle/Resources/config/routing.yml"
     prefix:   /smv
 ```
-
 
 #### Usage
 See graph of demo state machine (https://github.com/winzou/StateMachineBundle#configure-a-state-machine-graph)
