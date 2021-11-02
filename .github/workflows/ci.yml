@@ -51,6 +51,7 @@ jobs:
           composer require winzou/state-machine-bundle:"${{ matrix.state-machine-version }}" madmind/state-machine-visualization-bundle:"dev-${GITHUB_REF##*/}"
           cp ../tests/*_config.yaml ./config/packages
           cp ../tests/bundle_routes.yaml ./config/routes
+          rm -fr var/cache/dev/
           ./bin/console cache:clear
           php -S localhost:28080 -t public 2>&1 > server.log &
 
