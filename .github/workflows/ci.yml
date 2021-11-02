@@ -37,8 +37,8 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
-          restore-keys: ${{ runner.os }}-composer-
+          key: ${{ runner.os }}-composer-${{ matrix.symfony-version }}-${{ matrix.state-machine-version }}
+          restore-keys: ${{ runner.os }}-composer-${{ matrix.symfony-version }}-${{ matrix.state-machine-version }}
 
       - name: Setup Graphviz
         uses: ts-graphviz/setup-graphviz@v1
@@ -56,5 +56,5 @@ jobs:
 
       - name: Test
         run: |
-          curl -f -O http://localhost:28080/index.php/smv/my_bundle_article.svg
+          curl -vvv http://localhost:28080/index.php/smv/my_bundle_article.svg
           ./test-app/bin/console smv:dot my_bundle_article
