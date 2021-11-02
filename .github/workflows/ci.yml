@@ -36,7 +36,8 @@ jobs:
         run: |
           composer create-project symfony/skeleton test-app "${{ matrix.symfony-version }}"
           cd test-app
-          composer require winzou/state-machine-bundle:"${{ matrix.state-machine-version }}" madmind/state-machine-visualization-bundle:"dev-master#${{ github.sha }}"
+          composer config repositories.test path ../
+          composer require winzou/state-machine-bundle:"${{ matrix.state-machine-version }}" madmind/state-machine-visualization-bundle:"dev-${{ github.ref }}"
           cp ../tests/*_config.yml ./config/packages
           cp ../tests/bundle_routes.yml ./config/routes
           php -S localhost:28080 -t public 2>&1 > server.log &
