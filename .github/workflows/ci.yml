@@ -49,8 +49,9 @@ jobs:
           cd test-app
           composer config repositories.test path ../
           composer require winzou/state-machine-bundle:"${{ matrix.state-machine-version }}" madmind/state-machine-visualization-bundle:"dev-${GITHUB_REF##*/}"
-          cp ../tests/*_config.yml ./config/packages
-          cp ../tests/bundle_routes.yml ./config/routes
+          cp ../tests/*_config.yaml ./config/packages
+          cp ../tests/bundle_routes.yaml ./config/routes
+          ./bin/console cache:clear
           php -S localhost:28080 -t public 2>&1 > server.log &
 
       - name: Test
