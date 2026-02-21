@@ -8,31 +8,28 @@ jobs:
       fail-fast: false
       matrix:
         php-version:
-          - '7.4'
-          - '8.0'
           - '8.1'
           - '8.2'
+          - '8.3'
+          - '8.4'
         symfony-version:
-          - "~4.4"
-          - "~5.0"
-          - "~6.0"
+          - "~5.4"
+          - "~6.4"
+          - "~7.4"
+          - "~8.0"
         state-machine-version:
           - "0.3.1"
           - "0.5.1"
-          - "0.6.0"
+          - "0.6.3"
         exclude:
           - state-machine-version: "0.3.1"
-            symfony-version: "~5.0"
+            symfony-version: "~5.4"
           - state-machine-version: "0.3.1"
-            symfony-version: "~6.0"
+            symfony-version: "~6.4"
           - state-machine-version: "0.5.1"
-            symfony-version: "~6.0"
-          - state-machine-version: "0.6.0"
-            symfony-version: "~4.4"
-          - state-machine-version: "0.6.0"
-            symfony-version: "~5.0"
-          - php-version: "7.4"
-            symfony-version: "~6.0"
+            symfony-version: "~6.4"
+          - state-machine-version: "0.6.3"
+            symfony-version: "~5.4"
 
     steps:
       - uses: actions/checkout@v2

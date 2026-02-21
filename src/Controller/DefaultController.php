@@ -7,19 +7,20 @@ use MadMind\StateMachineVisualizationBundle\Service\ImageGeneratorInterface;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController
 {
-    protected $dotGenerator;
-    protected $imageGenerator;
-    protected $defaultLayout;
-    protected $defaultNodeShape;
+    protected DotGeneratorInterface $dotGenerator;
+    protected ImageGeneratorInterface $imageGenerator;
+    protected string $defaultLayout;
+    protected string $defaultNodeShape;
 
     public function __construct(
         DotGeneratorInterface $dotGenerator,
         ImageGeneratorInterface $imageGenerator,
-        $defaultLayout,
-        $defaultNodeShape
+        string $defaultLayout,
+        string $defaultNodeShape
     ) {
         $this->dotGenerator = $dotGenerator;
         $this->imageGenerator = $imageGenerator;
@@ -27,7 +28,7 @@ class DefaultController
         $this->defaultNodeShape = $defaultNodeShape;
     }
 
-    public function imageAction($machineName, $format, Request $request)
+    public function imageAction(string $machineName, string $format, Request $request): Response
     {
         if (!$this->imageGenerator->supports($format)) {
             throw new RuntimeException(sprintf("Format '%s' is not supported", $format));

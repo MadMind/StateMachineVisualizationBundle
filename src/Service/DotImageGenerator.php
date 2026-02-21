@@ -6,22 +6,22 @@ use MadMind\StateMachineVisualizationBundle\Exception\RendererException;
 
 class DotImageGenerator implements ImageGeneratorInterface
 {
-    protected $dotExecutable;
-    protected $cacheDir;
-    protected $supportedMimeTypes = [
+    protected string $dotExecutable;
+    protected string $cacheDir;
+    protected array $supportedMimeTypes = [
         'png' => 'image/png',
         'jpg' => 'image/jpeg',
         'gif' => 'image/gif',
         'svg' => 'image/svg+xml',
     ];
 
-    public function __construct($dotExecutable, $cacheDir)
+    public function __construct(string $dotExecutable, string $cacheDir)
     {
         $this->dotExecutable = $dotExecutable;
         $this->cacheDir = $cacheDir;
     }
 
-    public function render($format, $dotFilePath)
+    public function render(string $format, string $dotFilePath): string
     {
         if (!is_executable($this->dotExecutable)) {
             throw new RendererException($this->dotExecutable.' is not executable');
@@ -48,12 +48,12 @@ class DotImageGenerator implements ImageGeneratorInterface
         return $outputImage;
     }
 
-    public function supports($format)
+    public function supports(string $format): bool
     {
         return !empty($this->supportedMimeTypes[$format]);
     }
 
-    public function getMimeType($format)
+    public function getMimeType(string $format): string
     {
         if (!empty($this->supportedMimeTypes[$format])) {
             return $this->supportedMimeTypes[$format];

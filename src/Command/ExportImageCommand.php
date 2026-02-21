@@ -12,16 +12,16 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ExportImageCommand extends Command
 {
-    protected $dotGenerator;
-    protected $imageGenerator;
-    protected $defaultLayout;
-    protected $defaultNodeShape;
+    protected DotGeneratorInterface $dotGenerator;
+    protected ImageGeneratorInterface $imageGenerator;
+    protected string $defaultLayout;
+    protected string $defaultNodeShape;
 
     public function __construct(
         DotGeneratorInterface $dotGenerator,
         ImageGeneratorInterface $imageGenerator,
-        $defaultLayout,
-        $defaultNodeShape
+        string $defaultLayout,
+        string $defaultNodeShape
     ) {
         $this->dotGenerator = $dotGenerator;
         $this->imageGenerator = $imageGenerator;
@@ -31,7 +31,7 @@ class ExportImageCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('smv:image')
             ->setDescription('Export state machine visualisation image')
@@ -41,7 +41,7 @@ class ExportImageCommand extends Command
             ->addOption('node_shape', null, InputOption::VALUE_OPTIONAL, 'Dot node shape');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $format = $input->getArgument('format');
         $machineName = $input->getArgument('state_machine_name');

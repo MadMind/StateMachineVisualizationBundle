@@ -4,12 +4,5 @@ namespace MadMind\StateMachineVisualizationBundle\Service;
 
 interface DotGeneratorInterface
 {
-    /**
-     * @param string $stateMachineName
-     * @param string $layout
-     * @param string $nodeShape
-     *
-     * @return string
-     */
-    public function generate($stateMachineName, $layout, $nodeShape);
+    public function generate(string $stateMachineName, string $layout, string $nodeShape): string;
 }

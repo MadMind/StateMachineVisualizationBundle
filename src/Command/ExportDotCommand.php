@@ -11,14 +11,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ExportDotCommand extends Command
 {
-    protected $dotGenerator;
-    protected $defaultLayout;
-    protected $defaultNodeShape;
+    protected DotGeneratorInterface $dotGenerator;
+    protected string $defaultLayout;
+    protected string $defaultNodeShape;
 
     public function __construct(
         DotGeneratorInterface $dotGenerator,
-        $defaultLayout,
-        $defaultNodeShape
+        string $defaultLayout,
+        string $defaultNodeShape
     ) {
         $this->dotGenerator = $dotGenerator;
         $this->defaultLayout = $defaultLayout;
@@ -27,7 +27,7 @@ class ExportDotCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('smv:dot')
             ->setDescription('Export state machine visualisation dot file')
@@ -37,7 +37,7 @@ class ExportDotCommand extends Command
             ->addOption('output', null, InputOption::VALUE_OPTIONAL, 'Output file name', 'php://stdout');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $machineName = $input->getArgument('state_machine_name');
         $layout = strtoupper($input->getOption('layout') ?: $this->defaultLayout);
