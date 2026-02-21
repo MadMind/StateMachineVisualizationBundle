@@ -6,16 +6,16 @@ use MadMind\StateMachineVisualizationBundle\Exception\DotException;
 
 class StateMachineDotGenerator implements DotGeneratorInterface
 {
-    protected $stateMachines;
-    protected $cacheDir;
+    protected array $stateMachines;
+    protected string $cacheDir;
 
-    public function __construct(array $stateMachines, $cacheDir)
+    public function __construct(array $stateMachines, string $cacheDir)
     {
         $this->stateMachines = $stateMachines;
         $this->cacheDir = $cacheDir;
     }
 
-    public function generate($stateMachineName, $layout, $nodeShape)
+    public function generate(string $stateMachineName, string $layout, string $nodeShape): string
     {
         if (empty($this->stateMachines[$stateMachineName])) {
             throw new DotException(sprintf("State machine '%s' not found", $stateMachineName));
@@ -34,7 +34,7 @@ class StateMachineDotGenerator implements DotGeneratorInterface
         $result[] = "rankdir=$layout;";
         $result[] = 'node [shape = point]; _start_'; // Input node
 
-        // Use first value from 'states' as start.
+        // Use the first value from 'states' as a start.
         $start = $machine['states'][0];
         $result[] = "node [shape = $nodeShape];";
         $result[] = '_start_ -> '.$start.';';
